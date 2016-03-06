@@ -131,21 +131,3 @@ in its environment.  Since we aliased the database container with the name
 *db*, the environment variables from the database container are copied into the
 linked container with the prefix `DB_ENV_`.
 ## TODO
-
-#### Migrate to KSYS-iDempiere Database 3.1.xxx
-
-``` shell
-  if [[ -e /data/ksys-docker-idempiere-pgsql:3.1.xxx ]]; then
-	echo "Tag : ksys-docker-idempiere-pgsql:3.1.xxx"	
-  else
-	echo "Migrate to KSYS-iDempiere Database 3.1.xxx"
-
-	echo "1. Run SQL Migration"
-    cd /opt/idempiere-ksys/ksys/utils
-    ./RUN_SQLMigration-3.1.20151031.sh -y --force-yes
-	
-	echo "2. Tag : ksys-docker-idempiere-pgsql:3.1.xxx"
-	touch /data/ksys-docker-idempiere-pgsql:3.1.xxx
-	echo "Done."	
-  fi
-```

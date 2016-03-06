@@ -46,6 +46,21 @@ post_start_action() {
 	touch /data/ksys-docker-idempiere-pgsql:3.1.20151031
 	echo "Done."		
   fi
+  
+	# Migrate to KSYS-iDempiere Database 3.1.xxx  
+  if [[ -e /data/ksys-docker-idempiere-pgsql:3.1.xxx ]]; then
+	echo "Tag : ksys-docker-idempiere-pgsql:3.1.xxx"	
+  else
+	echo "Migrate to KSYS-iDempiere Database 3.1.xxx"
+
+	echo "1. Run SQL Migration"
+    cd /opt/idempiere-ksys/ksys/utils
+    ./RUN_SQLMigration-3.1.xxx.sh -y --force-yes
+	
+	echo "2. Tag : ksys-docker-idempiere-pgsql:3.1.xxx"
+	touch /data/ksys-docker-idempiere-pgsql:3.1.xxx
+	echo "Done."	
+  fi  
 
   rm /firstrun
 }
