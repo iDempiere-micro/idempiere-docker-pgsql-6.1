@@ -132,13 +132,13 @@ in its environment.  Since we aliased the database container with the name
 linked container with the prefix `DB_ENV_`.
 ## TODO
 
-  # Migrate to KSYS-iDempiere Database 3.1.xxx
-  if [[ -e /data/ksys-docker-idempiere-pgsql:3.1.xxx ]]; then
-	echo "Tag : ksys-docker-idempiere-pgsql:3.1.xxx"
-	
-  else
+#### Migrate to KSYS-iDempiere Database 3.1.xxx
 
-		echo "Migrate to KSYS-iDempiere Database 3.1.xxx"
+``` shell
+  if [[ -e /data/ksys-docker-idempiere-pgsql:3.1.xxx ]]; then
+	echo "Tag : ksys-docker-idempiere-pgsql:3.1.xxx"	
+  else
+	echo "Migrate to KSYS-iDempiere Database 3.1.xxx"
 
 	echo "1. Run SQL Migration"
     cd /opt/idempiere-ksys/ksys/utils
@@ -148,3 +148,4 @@ linked container with the prefix `DB_ENV_`.
 	touch /data/ksys-docker-idempiere-pgsql:3.1.xxx
 	echo "Done."	
   fi
+```
