@@ -15,15 +15,14 @@ then
     SYSUSER=postgres
 fi
 
-VERSION_TAG=3.1.20151031
-MIGRATION_PATH=$IDEMPIERE_HOME/data/seed/migration/i3.1/$ADEMPIERE_DB_PATH/$VERSION_TAG
+MIGRATION_PATH=$IDEMPIERE_HOME/data/seed/migration/i3.1/$ADEMPIERE_DB_PATH/$KSYS_VERSION_TAG
 
 echo Last SQL Migration folder for seed database $MIGRATION_PATH
-echo == Start... ($VERSION_TAG) ==
+echo == Start... $KSYS_VERSION_TAG ==
 ls -lsa $MIGRATION_PATH
 
 echo -------------------------------------
-echo Apply migration SQL to database $VERSION_TAG
+echo Apply migration SQL to database $KSYS_VERSION_TAG
 echo -------------------------------------
 
 PGPASSWORD=$ADEMPIERE_DB_PASSWORD
@@ -36,13 +35,6 @@ for sqlfile in *.sql; do
     psql -h $ADEMPIERE_DB_SERVER -p $ADEMPIERE_DB_PORT -U $ADEMPIERE_DB_USER -d $ADEMPIERE_DB_NAME -f $sqlfile
 done
 
-#i3.1z (4.0 dev)
-#cd $IDEMPIERE_HOME/data/seed/migration/i3.1z/$ADEMPIERE_DB_PATH
-#for sqlfile in *.sql; do
-#    echo $sqlfile
-#    psql -h $ADEMPIERE_DB_SERVER -p $ADEMPIERE_DB_PORT -U $ADEMPIERE_DB_USER -d $ADEMPIERE_DB_NAME -f $sqlfile
-#done
-
 #post migration
 cd $IDEMPIERE_HOME/data/seed/migration/processes_post_migration/$ADEMPIERE_DB_PATH
 for sqlfile in *.sql; do
@@ -50,4 +42,4 @@ for sqlfile in *.sql; do
     psql -h $ADEMPIERE_DB_SERVER -p $ADEMPIERE_DB_PORT -U $ADEMPIERE_DB_USER -d $ADEMPIERE_DB_NAME -f $sqlfile
 done
 
-echo == End. ($VERSION_TAG) ==
+echo == End. $KSYS_VERSION_TAG ==

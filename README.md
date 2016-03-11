@@ -11,17 +11,17 @@ This example creates the image with the tag `longnan/ksys-idempiere-docker-pgsql
 change this to use your own username.
 
 ```
-$ sudo docker build --rm --force-rm -t="longnan/ksys-idempiere-docker-pgsql:3.1.0.20151031" .
+$ sudo docker build --rm --force-rm -t="longnan/ksys-idempiere-docker-pgsql:3.1.20160311" .
 ```
 
 ## Image Save/Load
 
 ```
 # save image to tarball
-$ sudo docker save longnan/ksys-idempiere-docker-pgsql:3.1.0.20151031 | gzip > ksys-idempiere-docker-pgsql-3.1.0.20151031.tar.gz
+$ sudo docker save longnan/ksys-idempiere-docker-pgsql:3.1.20160311 | gzip > ksys-idempiere-docker-pgsql-3.1.20160311.tar.gz
 
 # load it back
-$ sudo gzcat ksys-idempiere-docker-pgsql-3.1.0.20151031.tar.gz | docker load 
+$ sudo gzcat ksys-idempiere-docker-pgsql-3.1.20160311.tar.gz | docker load 
 ```
 
 Download prepared images from:
@@ -51,7 +51,7 @@ $ docker run -d --name="ksys-idempiere-pgsql" \
              -p 5432:5432 \
              -v /tmp/postgresql:/data \
              -e PASS="$(pwgen -s -1 16)" \
-             longnan/ksys-idempiere-docker-pgsql:3.1.0.20151031
+             longnan/ksys-idempiere-docker-pgsql:3.1.20160311
 $ docker logs -f ksys-idempiere-pgsql
 ```
 
@@ -62,8 +62,8 @@ $ docker volume create --name ksys-idempiere-pgsql-datastore
 $ docker run -d --name="ksys-idempiere-pgsql" \
              -p 5432:5432 \
              -v ksys-idempiere-pgsql-datastore:/data \
-             -e PASS="$(pwgen -s -1 16)" \
-             longnan/ksys-idempiere-docker-pgsql:3.1.0.20151031
+             -e PASS="postgres" \
+             longnan/ksys-idempiere-docker-pgsql:3.1.20160311
 $ docker logs -f ksys-idempiere-pgsql
 ```
 
