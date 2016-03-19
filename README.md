@@ -11,17 +11,17 @@ This example creates the image with the tag `longnan/ksys-idempiere-docker-pgsql
 change this to use your own username.
 
 ```
-$ sudo docker build --rm --force-rm -t="longnan/ksys-idempiere-docker-pgsql:3.1.20160311" .
+$ sudo docker build --rm --force-rm -t="longnan/ksys-idempiere-docker-pgsql:3.1.0.20160311" .
 ```
 
 ## Image Save/Load
 
 ```
 # save image to tarball
-$ sudo docker save longnan/ksys-idempiere-docker-pgsql:3.1.20160311 | gzip > ksys-idempiere-docker-pgsql-3.1.20160311.tar.gz
+$ sudo docker save longnan/ksys-idempiere-docker-pgsql:3.1.0.20160311 | gzip > ksys-idempiere-docker-pgsql-3.1.0.20160311.tar.gz
 
 # load it back
-$ sudo gzcat ksys-idempiere-docker-pgsql-3.1.20160311.tar.gz | docker load 
+$ sudo gzcat ksys-idempiere-docker-pgsql-3.1.0.20160311.tar.gz | docker load 
 ```
 
 Download prepared images from:
@@ -51,7 +51,7 @@ $ docker run -d --name="ksys-idempiere-pgsql" \
              -p 5432:5432 \
              -v /tmp/postgresql:/data \
              -e PASS="$(pwgen -s -1 16)" \
-             longnan/ksys-idempiere-docker-pgsql:3.1.20160311
+             longnan/ksys-idempiere-docker-pgsql:3.1.0.20160311
 $ docker logs -f ksys-idempiere-pgsql
 ```
 
@@ -63,7 +63,7 @@ $ docker run -d --name="ksys-idempiere-pgsql" \
              -p 5432:5432 \
              -v ksys-idempiere-pgsql-datastore:/data \
              -e PASS="postgres" \
-             longnan/ksys-idempiere-docker-pgsql:3.1.20160311
+             longnan/ksys-idempiere-docker-pgsql:3.1.0.20160311
 $ docker logs -f ksys-idempiere-pgsql
 ```
 
@@ -130,4 +130,10 @@ PASS=<pass>`, then the linked container should have these variables available
 in its environment.  Since we aliased the database container with the name
 *db*, the environment variables from the database container are copied into the
 linked container with the prefix `DB_ENV_`.
+
+## Update
+
+1. Add version check in first_run script
+2. Add new version of SQL migration script of Postgresql 
+
 ## TODO
