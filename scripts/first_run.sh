@@ -1,5 +1,7 @@
 USER=${USER:-postgres}
 PASS=${PASS:-$(pwgen -s -1 16)}
+# Default DB Version
+KSYS_VERSION_TAG=3.1.0.20151031
 
 pre_start_action() {
   # Echo out info to later obtain by running `docker logs container_name`
@@ -23,9 +25,9 @@ pre_start_action() {
 }
 
 post_start_action() {
-  # Init KSYS-iDempiere Database 3.1.0.20151031
-  if [[ -e  /data/ksys-idempiere-docker-pgsql:3.1.0.20151031 ]]; then
-	echo "Tag : ksys-idempiere-docker-pgsql:3.1.0.20151031"
+  # Init KSYS-iDempiere Database $KSYS_VERSION_TAG
+  if [[ -e  /data/ksys-idempiere-docker-pgsql:$KSYS_VERSION_TAG ]]; then
+	echo "Tag : ksys-idempiere-docker-pgsql:$KSYS_VERSION_TAG"
   else
 	echo "Initializing KSYS-iDempiere Database 3.1"
 	
@@ -43,49 +45,32 @@ post_start_action() {
     ./RUN_ImportIdempiere.sh -y --force-yes
 	
 	echo "3. Run Init SQL Migration"
-	KSYS_VERSION_TAG=3.1.0.20151031
 	export KSYS_VERSION_TAG
     cd /opt/idempiere-ksys/ksys/utils
     ./RUN_SQLMigration.sh -y --force-yes	
 	
-	echo "4. Tag : ksys-idempiere-docker-pgsql:3.1.0.20151031"
-	touch /data/ksys-idempiere-docker-pgsql:3.1.0.20151031
-	echo "Done. (3.1.0.20151031)"		
+	echo "4. Tag : ksys-idempiere-docker-pgsql:$KSYS_VERSION_TAG"
+	touch /data/ksys-idempiere-docker-pgsql:$KSYS_VERSION_TAG
+	echo "Done. ($KSYS_VERSION_TAG)"		
   fi
   
-  # Migrate to KSYS-iDempiere Database 3.1.0.20160311  
-  if [[ -e /data/ksys-idempiere-docker-pgsql:3.1.0.20160311 ]]; then
-	echo "Tag : ksys-idempiere-docker-pgsql:3.1.0.20160311"	
+  # Setup migration DB version
+  KSYS_VERSION_TAG=3.1.0.20160716
+  # Migrate to KSYS-iDempiere Database $KSYS_VERSION_TAG 
+  if [[ -e /data/ksys-idempiere-docker-pgsql:$KSYS_VERSION_TAG ]]; then
+	echo "Tag : ksys-idempiere-docker-pgsql:$KSYS_VERSION_TAG"	
   else
-	echo "Migrate to KSYS-iDempiere Database 3.1.0.20160311"
+	echo "Migrate to KSYS-iDempiere Database $KSYS_VERSION_TAG"
 
 	echo "1. Run SQL Migration"
-	KSYS_VERSION_TAG=3.1.0.20160311
 	export KSYS_VERSION_TAG
     cd /opt/idempiere-ksys/ksys/utils
     ./RUN_SQLMigration.sh -y --force-yes
 	
-	echo "2. Tag : ksys-idempiere-docker-pgsql:3.1.0.20160311"
-	touch /data/ksys-idempiere-docker-pgsql:3.1.0.20160311
-	echo "Done. (3.1.0.20160311)"	
+	echo "2. Tag : ksys-idempiere-docker-pgsql:$KSYS_VERSION_TAG"
+	touch /data/ksys-idempiere-docker-pgsql:$KSYS_VERSION_TAG
+	echo "Done. ($KSYS_VERSION_TAG)"	
   fi  
   
-  # Migrate to KSYS-iDempiere Database 3.1.0.20160507  
-  if [[ -e /data/ksys-idempiere-docker-pgsql:3.1.0.20160507 ]]; then
-	echo "Tag : ksys-idempiere-docker-pgsql:3.1.0.20160507"	
-  else
-	echo "Migrate to KSYS-iDempiere Database 3.1.0.20160507"
-
-	echo "1. Run SQL Migration"
-	KSYS_VERSION_TAG=3.1.0.20160507
-	export KSYS_VERSION_TAG
-    cd /opt/idempiere-ksys/ksys/utils
-    ./RUN_SQLMigration.sh -y --force-yes
-	
-	echo "2. Tag : ksys-idempiere-docker-pgsql:3.1.0.20160507"
-	touch /data/ksys-idempiere-docker-pgsql:3.1.0.20160507
-	echo "Done. (3.1.0.20160507)"	
-  fi  
-
   rm /firstrun
 }
