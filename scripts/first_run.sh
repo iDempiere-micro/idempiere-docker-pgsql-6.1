@@ -55,7 +55,7 @@ post_start_action() {
   fi
   
   # Setup migration DB version
-  KSYS_VERSION_TAG=3.1.0.20160716
+  KSYS_VERSION_TAG=3.1.0.20160730
   # Migrate to KSYS-iDempiere Database $KSYS_VERSION_TAG 
   if [[ -e /data/ksys-idempiere-docker-pgsql:$KSYS_VERSION_TAG ]]; then
 	echo "Tag : ksys-idempiere-docker-pgsql:$KSYS_VERSION_TAG"	
