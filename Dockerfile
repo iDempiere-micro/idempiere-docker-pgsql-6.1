@@ -27,28 +27,28 @@ RUN echo "deb http://mirrors.163.com/ubuntu/ xenial main restricted universe mul
 		 "deb-src http://mirrors.163.com/ubuntu/ xenial-security main restricted universe multiverse \n" \
 		 "deb-src http://mirrors.163.com/ubuntu/ xenial-updates main restricted universe multiverse \n" \
 		 "deb-src http://mirrors.163.com/ubuntu/ xenial-proposed main restricted universe multiverse \n" \
-		 "deb-src http://mirrors.163.com/ubuntu/ xenial-backports main restricted universe multiverse \n" > /etc/apt/sources.list		 
+		 "deb-src http://mirrors.163.com/ubuntu/ xenial-backports main restricted universe multiverse \n" > /etc/apt/sources.list
 
-  
+
 ### Install PG from Postgresql official repository
-#RUN apt-get update && \
-#		DEBIAN_FRONTEND=noninteractive \
-#		apt-get install -y wget
-#RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | \
-#		apt-key add -		
-#ENV PG_MAJOR 9.4
-#RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
-#		apt-get update && \
-#		DEBIAN_FRONTEND=noninteractive \
-#		apt-get install -y --force-yes postgresql-$PG_MAJOR postgresql-contrib-$PG_MAJOR && \
-#		/etc/init.d/postgresql stop
-		 
-### Install PG from ubuntu default repository		
-ENV PG_MAJOR 9.4 
 RUN apt-get update && \
+		DEBIAN_FRONTEND=noninteractive \
+		apt-get install -y wget
+RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | \
+		apt-key add -
+ENV PG_MAJOR 9.4
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
+		apt-get update && \
 		DEBIAN_FRONTEND=noninteractive \
 		apt-get install -y --force-yes postgresql-$PG_MAJOR postgresql-contrib-$PG_MAJOR && \
 		/etc/init.d/postgresql stop
+
+### Install PG from ubuntu default repository
+#ENV PG_MAJOR 9.4
+#RUN apt-get update && \
+#		DEBIAN_FRONTEND=noninteractive \
+#		apt-get install -y --force-yes postgresql-$PG_MAJOR postgresql-contrib-$PG_MAJOR && \
+#		/etc/init.d/postgresql stop
 
 ### Configure the database
 RUN sed -i -e"s/data_directory =.*$/data_directory = '\/data'/" /etc/postgresql/$PG_MAJOR/main/postgresql.conf
@@ -61,11 +61,11 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y pwgen inotify-tools
 
 ### Copy and setup iDempiere Database Package
 RUN mkdir /opt/idempiere-ksys/
-ADD ksys /opt/idempiere-ksys/ksys
-ENV IDEMPIERE_HOME /opt/idempiere-ksys/ksys
-RUN mv /opt/idempiere-ksys/ksys/myEnvironment.sh /opt/idempiere-ksys/ksys/utils;
-RUN chmod 755 /opt/idempiere-ksys/ksys/utils/*.sh;
-RUN chmod 755 /opt/idempiere-ksys/ksys/utils/postgresql/*.sh;
+ADD db /opt/idempiere-ksys/db
+ENV IDEMPIERE_HOME /opt/idempiere-ksys/db
+RUN mv ${IDEMPIERE_HOME}/myEnvironment.sh ${IDEMPIERE_HOME}/utils;
+RUN chmod 755 ${IDEMPIERE_HOME}/utils/*.sh;
+RUN chmod 755 ${IDEMPIERE_HOME}/utils/postgresql/*.sh;
 
 ### Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -87,4 +87,3 @@ EXPOSE 5432
 
 ### Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
-

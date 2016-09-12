@@ -7,10 +7,10 @@ set -e
 DATA_DIR=/data
 
 if [[ -e /firstrun ]]; then
-  echo "First run of ksys-docker-idempiere-pgsql"
+  echo "First run of pgsql"
   source /scripts/first_run.sh
 else
-  echo "Normal run of ksys-docker-idempiere-pgsql"
+  echo "Normal run of pgsql"
   source /scripts/normal_run.sh
 fi
 
@@ -31,5 +31,3 @@ wait_for_postgres_and_run_post_start_action &
 # Start PostgreSQL
 echo "Starting PostgreSQL..."
 setuser postgres /usr/lib/postgresql/$PG_MAJOR/bin/postgres -D /etc/postgresql/$PG_MAJOR/main
-
-
