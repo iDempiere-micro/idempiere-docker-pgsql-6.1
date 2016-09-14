@@ -55,7 +55,7 @@ post_start_action() {
   fi
 
   # Setup migration DB version
-  APPDB_VERSION_TAG=3.1.0.20160730
+  APPDB_VERSION_TAG=3.1.0.20160913
   # Migrate to $APPDB_VERSION_TAG
   if [[ -e /data/tag:$APPDB_VERSION_TAG ]]; then
 	   echo "Tag : $APPDB_VERSION_TAG"
