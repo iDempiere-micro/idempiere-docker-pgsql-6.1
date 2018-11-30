@@ -1,7 +1,7 @@
 USER=${USER:-postgres}
 PASS=${PASS:-$(pwgen -s -1 16)}
 # Default DB Version
-APPDB_VERSION_TAG=3.1.0.20151031
+APPDB_VERSION_TAG=5.1.0.20171101
 
 pre_start_action() {
   # Echo out info to later obtain by running `docker logs container_name`
@@ -27,7 +27,7 @@ pre_start_action() {
 post_start_action() {
   # Init Database $APPDB_VERSION_TAG
   if [[ -e  /data/tag:$APPDB_VERSION_TAG ]]; then
-	   echo "Tag : $APPDB_VERSION_TAG"
+	   echo "Initial DB Tag Exists: $APPDB_VERSION_TAG"
   else
 	   echo "Initializing Database"
 
@@ -41,33 +41,32 @@ post_start_action() {
 	EOF
 
       echo "2. Import Seed Database"
-	    cd ${IDEMPIERE_HOME}/utils
+	    cd ${IDEMPIERE_DB_HOME}/utils
       ./RUN_ImportIdempiere.sh -y --force-yes
 
 	    echo "3. Run Init SQL Migration"
 	    export APPDB_VERSION_TAG
-      cd ${IDEMPIERE_HOME}/utils
+      cd ${IDEMPIERE_DB_HOME}/utils
       ./RUN_SQLMigration.sh -y --force-yes
 
-	    echo "4. Tag : $APPDB_VERSION_TAG"
+	    echo "4. Create Initial DB Tag : $APPDB_VERSION_TAG"
 	    touch /data/tag:$APPDB_VERSION_TAG
 	    echo "Done. ($APPDB_VERSION_TAG)"
   fi
 
-  # Setup migration DB version
-  APPDB_VERSION_TAG=3.1.0.20160913
-  # Migrate to $APPDB_VERSION_TAG
+  # Start DB version migration 
+  APPDB_VERSION_TAG=5.1.0.20180122
   if [[ -e /data/tag:$APPDB_VERSION_TAG ]]; then
-	   echo "Tag : $APPDB_VERSION_TAG"
+	   echo "Migration DB Tag Exists: $APPDB_VERSION_TAG"
   else
 	   echo "Migrate to $APPDB_VERSION_TAG"
 
 	   echo "1. Run SQL Migration"
 	   export APPDB_VERSION_TAG
-     cd ${IDEMPIERE_HOME}/utils
+     cd ${IDEMPIERE_DB_HOME}/utils
      ./RUN_SQLMigration.sh -y --force-yes
 
-	   echo "2. Tag : $APPDB_VERSION_TAG"
+	   echo "2. Create Migration DB Tag : $APPDB_VERSION_TAG"
 	   touch /data/tag:$APPDB_VERSION_TAG
 	   echo "Done. ($APPDB_VERSION_TAG)"
   fi

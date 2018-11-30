@@ -1,38 +1,31 @@
-# ksys-idempiere-docker-pgsql
+# idempiere-docker-pgsql
 
-A Dockerfile that produces a container that will run [PostgreSQL][postgresql] for iDempiere-KSYS.
-The Postgresql part in Dockerfile was forked from https://github.com/Painted-Fox/docker-postgresql
-The base image is from https://github.com/phusion/baseimage-docker
-
-[postgresql]: http://www.postgresql.org/
+A Dockerfile that produces a container that will run [PostgreSQL][postgresql] for iDempiere. A fork of https://bitbucket.org/longnan/idempiere-docker/src/default/idempiere-docker-pgsql/ upgraded to iDempiere 6.1.
 
 ## Image Creation
 
-This example creates the image with the tag `longnan/ksys-idempiere-docker-pgsql`, but you can
-change this to use your own username.
-
 ```
-$ sudo docker build --rm --force-rm -t="longnan/ksys-idempiere-docker-pgsql:3.1.0.yyyymmdd" .
+$ docker build --rm --force-rm -t="idempiere/idempiere-docker-pgsql:6.1.0.latest" .
 ```
 
 ## Image Save/Load
 
 ```
 # save image to tarball
-$ sudo docker save longnan/ksys-idempiere-docker-pgsql:3.1.0.yyyymmdd | gzip > ksys-idempiere-docker-pgsql-3.1.0.yyyymmdd.tar.gz
+$ docker save idempiere/idempiere-docker-pgsql:6.1.0.latest | gzip > idempiere-docker-pgsql-6.1.0.latest.tar.gz
 
 # load it back
-$ sudo gzcat ksys-idempiere-docker-pgsql-3.1.0.yyyymmdd.tar.gz | docker load 
+$ gzcat idempiere-docker-pgsql-6.1.0.latest.tar.gz | docker load
 ```
 
 Download prepared images from:
-https://sourceforge.net/projects/idempiereksys/files/idempiere-ksys-docker-image/
+https://sourceforge.net/projects/idempiereksys/files/idempiere-docker-image/
 
 ## Container Creation / Running
 
 The PostgreSQL server is configured to store data in `/data` inside the
 container.  You can map the container's `/data` volume to a volume on the host
-so the data becomes independent of the running container. There is also an 
+so the data becomes independent of the running container. There is also an
 additional volume at `/var/log/postgresql` which exposes PostgreSQL's logs.
 
 This example uses `/tmp/postgresql` to store the PostgreSQL data, but you can
@@ -41,32 +34,32 @@ modify this to your needs.
 When the container runs, it creates a superuser with a random password.  You
 can set the username and password for the superuser by setting the container's
 environment variables.  This lets you discover the username and password of the
-superuser from within a linked container or from the output of 
-`docker inspect ksys-idempiere-pgsql`.
+superuser from within a linked container or from the output of
+`docker inspect idempiere-pgsql`.
 
 ### Persistant data to host file system
 
 ``` shell
 $ mkdir -p /tmp/postgresql
-$ docker run -d --name="ksys-idempiere-pgsql" \
+$ docker run -d --name="idempiere-pgsql" \
              -p 5432:5432 \
              -v /tmp/postgresql:/data \
              -e PASS="$(pwgen -s -1 16)" \
-             longnan/ksys-idempiere-docker-pgsql:3.1.0.yyyymmdd
-$ docker logs -f ksys-idempiere-pgsql
+             idempiere/idempiere-docker-pgsql:5.1.0.latest
+$ docker logs -f idempiere-pgsql
 ```
 
 ### Persistant data to docker volume
 
 ``` shell
-$ docker volume rm ksys-idempiere-pgsql-datastore
-$ docker volume create --name ksys-idempiere-pgsql-datastore
-$ docker run -d --name="ksys-idempiere-pgsql" \
+$ docker volume rm idempiere-pgsql-datastore
+$ docker volume create --name idempiere-pgsql-datastore
+$ docker run -d --name="idempiere-pgsql" \
              -p 5432:5432 \
-             -v ksys-idempiere-pgsql-datastore:/data \
+             -v idempiere-pgsql-datastore:/data \
              -e PASS="postgres" \
-             longnan/ksys-idempiere-docker-pgsql:3.1.0.yyyymmdd
-$ docker logs -f ksys-idempiere-pgsql
+             idempiere/idempiere-docker-pgsql:5.1.0.latest
+$ docker logs -f idempiere-pgsql
 ```
 
 ## Connecting to the Database
@@ -133,9 +126,8 @@ in its environment.  Since we aliased the database container with the name
 *db*, the environment variables from the database container are copied into the
 linked container with the prefix `DB_ENV_`.
 
-## Update
+## Update/Migration DB
 
-1. Add version check in first_run script
-2. Add new version folder of SQL migration script of Postgresql 
-
-## TODO
+ToDo:
+1. Add migration DB Tag check in first_run script
+2. Add new folder of SQL migration script of Postgresql
