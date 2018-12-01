@@ -18,10 +18,10 @@ $ docker save idempiere/idempiere-docker-pgsql:6.1.0.latest | gzip > idempiere-d
 $ gzcat idempiere-docker-pgsql-6.1.0.latest.tar.gz | docker load
 ```
 
-Download prepared images from:
-https://sourceforge.net/projects/idempiereksys/files/idempiere-docker-image/
+Download prepared image from:
+https://github.com/iDempiere-micro/idempiere-docker-pgsql-6.1/releases/download/6.1.0/idempiere-docker-pgsql-6.1.0.latest.tar.gz
 
-## Container Creation / Running
+##Container Creation / Running
 
 The PostgreSQL server is configured to store data in `/data` inside the
 container.  You can map the container's `/data` volume to a volume on the host
