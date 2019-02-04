@@ -5,21 +5,21 @@ A Dockerfile that produces a container that will run [PostgreSQL](https://www.po
 ## Image Creation
 
 ```
-$ docker build --rm --force-rm -t="idempiere/idempiere-docker-pgsql:6.1.0.latest" .
+$ docker build --rm --force-rm -t="idempiere/idempiere-docker-pgsql:6.2.0.latest" .
 ```
 
 ## Image Save/Load
 
 ```
 # save image to tarball
-$ docker save idempiere/idempiere-docker-pgsql:6.1.0.latest | gzip > idempiere-docker-pgsql-6.1.0.latest.tar.gz
+$ docker save idempiere/idempiere-docker-pgsql:6.2.0.latest | gzip > idempiere-docker-pgsql-6.2.0.latest.tar.gz
 
 # load it back
-$ gzcat idempiere-docker-pgsql-6.1.0.latest.tar.gz | docker load
+$ zcat idempiere-docker-pgsql-6.2.0.latest.tar.gz | docker load
 ```
 
 Download prepared image from:
-https://sourceforge.net/projects/idempiere-micro/files/docker-images/idempiere-docker-pgsql-6.1.0.latest.tar.gz/download or https://github.com/iDempiere-micro/idempiere-docker-pgsql-6.1/releases/download/6.1.0/idempiere-docker-pgsql-6.1.0.latest.tar.gz
+https://sourceforge.net/projects/idempiere-micro/files/docker-images/idempiere-docker-pgsql-6.2.0.latest.tar.gz/download or https://github.com/iDempiere-micro/idempiere-docker-pgsql-6.1/releases/download/6.2.0/idempiere-docker-pgsql-6.2.0.latest.tar.gz
 
 ## Container Creation / Running
 

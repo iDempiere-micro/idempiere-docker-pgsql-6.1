@@ -41,6 +41,10 @@ run_migration()
 run_migration $IDEMPIERE_HOME/data/seed/migration/i5.1/$ADEMPIERE_DB_PATH/$APPDB_VERSION_TAG
 run_migration $IDEMPIERE_HOME/data/seed/migration/i5.1z/$ADEMPIERE_DB_PATH
 run_migration $IDEMPIERE_HOME/data/seed/migration/i6.1/$ADEMPIERE_DB_PATH
+run_migration $IDEMPIERE_HOME/data/seed/migration/i6.1z/$ADEMPIERE_DB_PATH
+run_migration $IDEMPIERE_HOME/data/seed/migration/i6.2/$ADEMPIERE_DB_PATH
+run_migration $IDEMPIERE_HOME/data/seed/migration/i6.2z/$ADEMPIERE_DB_PATH
+
 #post migration
 cd $IDEMPIERE_HOME/data/seed/migration/processes_post_migration/$ADEMPIERE_DB_PATH
 for sqlfile in *.sql; do
