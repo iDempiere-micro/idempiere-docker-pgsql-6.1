@@ -19,7 +19,7 @@ $ gzcat idempiere-docker-pgsql-6.1.0.latest.tar.gz | docker load
 ```
 
 Download prepared image from:
-https://sourceforge.net/projects/idempiere-micro/files/docker-images/idempiere-docker-pgsql-6.1.0.latest.tar.gz/download or https://github.com/iDempiere-micro/idempiere-docker-pgsql-6.1/releases/download/6.1.0/idempiere-docker-pgsql-6.1.0.latest.tar.gz
+https://sourceforge.net/projects/idempiere-micro/files/docker-images/idempiere-docker-pgsql-6.1.0.latest.tar.gz/download.
 
 ## Container Creation / Running
 
