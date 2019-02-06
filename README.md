@@ -14,8 +14,11 @@ $ docker build --rm --force-rm -t="idempiere/idempiere-docker-pgsql:6.2.0.latest
 # save image to tarball
 $ docker save idempiere/idempiere-docker-pgsql:6.2.0.latest | gzip > idempiere-docker-pgsql-6.2.0.latest.tar.gz
 
-# load it back
+# load it back (Ubuntu)
 $ zcat idempiere-docker-pgsql-6.2.0.latest.tar.gz | docker load
+
+# load it back (Mac)
+$ gzcat idempiere-docker-pgsql-6.2.0.latest.tar.gz | docker load
 ```
 
 Download prepared image from:
