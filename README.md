@@ -1,6 +1,6 @@
 # idempiere-docker-pgsql
 
-A Dockerfile that produces a container that will run [PostgreSQL](https://www.postgresql.org/) for  [iDempiere](http://www.idempiere.org/). A fork of [idempiere-docker-pgsql](https://bitbucket.org/longnan/idempiere-docker/src/default/idempiere-docker-pgsql/) upgraded to iDempiere 6.1.
+A Dockerfile that produces a container that will run [PostgreSQL](https://www.postgresql.org/) for  [iDempiere](http://www.idempiere.org/). A fork of [idempiere-docker-pgsql](https://bitbucket.org/longnan/idempiere-docker/src/default/idempiere-docker-pgsql/) upgraded to iDempiere 6.2.
 
 **TL;DR** `tools/remove_volumes.sh && tools/idempiere_db.sh`
 
