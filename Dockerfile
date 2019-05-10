@@ -8,18 +8,6 @@ FROM phusion/baseimage:0.10.1
 RUN locale-gen en_US.UTF-8 && \
     echo 'LANG="en_US.UTF-8"' > /etc/default/locale
 
-# Setup fast apt mirror in China
-RUN echo "deb http://mirrors.163.com/ubuntu/ xenial main restricted universe multiverse \n" \
-		"deb http://mirrors.163.com/ubuntu/ xenial-security main restricted universe multiverse \n" \
-		"deb http://mirrors.163.com/ubuntu/ xenial-updates main restricted universe multiverse \n" \
-		"deb http://mirrors.163.com/ubuntu/ xenial-proposed main restricted universe multiverse \n" \
-		"deb http://mirrors.163.com/ubuntu/ xenial-backports main restricted universe multiverse \n" \
-		"deb-src http://mirrors.163.com/ubuntu/ xenial main restricted universe multiverse \n" \
-		"deb-src http://mirrors.163.com/ubuntu/ xenial-security main restricted universe multiverse \n" \
-		"deb-src http://mirrors.163.com/ubuntu/ xenial-updates main restricted universe multiverse \n" \
-		"deb-src http://mirrors.163.com/ubuntu/ xenial-proposed main restricted universe multiverse \n" \
-		"deb-src http://mirrors.163.com/ubuntu/ xenial-backports main restricted universe multiverse \n" > /etc/apt/sources.list
-
 # Install PG from ubuntu default repository
 ENV PG_MAJOR 9.5
 RUN apt-get update && \
